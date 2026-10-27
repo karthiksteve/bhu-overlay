@@ -1,0 +1,68 @@
+# =============================================================================
+# Root .gitignore for Bhu-Overlay
+# =============================================================================
+
+# Virtual environments
+.venv/
+*/.venv/
+venv/
+*/venv/
+env/
+*/env/
+
+# Python bytecode & cache
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*/.pytest_cache/
+
+# Environment files & Secrets
+.env
+*/.env
+*/*/.env
+*.key
+*.pem
+!/.env.example
+!*/.env.example
+
+# Session cookies & tokens (runtime generated)
+session_cookies.json
+*/session_cookies.json
+*/*/session_cookies.json
+
+# Logs & temp files
+*.log
+app_stderr.txt
+app_stdout.txt
+stderr.txt
+stdout.txt
+*.tmp
+*.bak
+
+# Generated exports and reports
+static/reports/
+*/static/reports/
+dist/
+*.zip
+
+# Generated runtime tile caches
+static/wms_cache/*.png
+*/static/wms_cache/*.png
+!static/wms_cache/.gitkeep
+!*/static/wms_cache/.gitkeep
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# IDE configuration
+.vscode/*
+!.vscode/tasks.json
+.idea/
+*.sublime-project
+*.sublime-workspace
