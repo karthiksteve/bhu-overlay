@@ -166,7 +166,7 @@ The corresponding bisected half-polygon $\mathcal{P}(t)$ satisfies the residual 
 \end{equation}
 Because $A(\mathcal{P}(t))$ is monotonically non-decreasing over the bounding interval $[t_{\text{min}}, t_{\text{max}}]$, the exact root $t^*$ such that $|f(t^*)| < \epsilon$ (with $\epsilon = 10^{-4}\,\text{m}^2$) is computed via bounded binary bisection. The algorithm converges within at most $\lceil \log_2((t_{\text{max}} - t_{\text{min}}) / \epsilon) \rceil \approx 24$ iterations, completing in less than 2 milliseconds per sub-parcel.
 
-\begin{figure}[!t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{docs/screenshots/bhu_02_parcel_selected_vector_map.png}
 \caption{Cadastral parcel inspection on Plot 1623. The platform computes real-time boundary polygon geometry from cached SQLite coordinates, overlays node markers at all 43 boundary vertices, and dynamically computes and displays side lengths (e.g., 27.3\,m, 14.8\,m, 18.2\,m) on the satellite canvas.}
@@ -191,14 +191,14 @@ Candidate partition strategies are quantitatively profiled across three objectiv
     \item \textbf{Micro-Asset Disparity ($\Delta_{\text{asset}}$):} Measures variance in the assignment of manually tagged trees and wells across sub-parcels.
 \end{enumerate}
 
-\begin{figure}[!t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{docs/screenshots/bhu_04_kurra_subdivided_2shares.png}
 \caption{AI-assisted Kurra land subdivision of Plot 1623 into two equal co-sharer parcels (Plot 1 in terracotta, Plot 2 in emerald green). The deterministic cut achieves exact area balance while the Gemini advisory agent validates compliance with statutory compactness standards.}
 \label{fig:kurra_2shares}
 \end{figure}
 
-\begin{figure}[!t]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\columnwidth]{docs/screenshots/bhu_06_kurra_3shares_custom.png}
 \caption{Arbitrary multi-sharer land partition executing a custom ratio allocation ($50\%, 25\%, 25\%$) on Plot 1623. Each sub-parcel is assigned distinct topological coordinates, calculated areas, and independent metric profiles.}
@@ -226,9 +226,9 @@ with default weights $w_1 = 0.5, w_2 = 0.3, w_3 = 0.2$. The top-ranked strategy 
 \subsection{Automated Vector PDF Report Generation}
 The final approved subdivision plan is compiled into an official PDF document via \texttt{backend/reports.py} using \texttt{fpdf2}. The report generates vector drawings directly from Shapely polygon coordinate vertices, incorporating survey metadata, area conversions (sq.\,meters, acres, hectares), perimeter tables, boundary segment measurements, and the statutory legal advisory text.
 
-\begin{figure}[!t]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\columnwidth]{docs/screenshots/report_kurra_pdf_page1.png}
+\includegraphics[width=0.82\columnwidth, height=5.2cm, keepaspectratio]{docs/screenshots/report_kurra_pdf_page1.png}
 \caption{Official Cadastral Partition (Kurra) PDF report generated automatically by the platform for Plot 1623. The report renders native vector parcel geometry, co-sharer area allocations, per-sub-plot metrics, and the statutory Revenue Code compliance decree.}
 \label{fig:pdf_report}
 \end{figure}
@@ -254,15 +254,16 @@ All 18 automated tests achieved 100\% passing status with an aggregate execution
 \subsection{Quantitative Partition Performance}
 Table~\ref{tab:benchmarks} summarizes the quantitative operational metrics of the Bhu-Overlay geometry and partitioning pipeline evaluated across varying co-sharer counts.
 
-\begin{table}[!t]
+\begin{table}[htbp]
 \caption{Computational and Spatial Performance Across Partition Scenarios}
 \label{tab:benchmarks}
 \centering
-\setlength{\tabcolsep}{4.5pt}
-\renewcommand{\arraystretch}{1.2}
+\resizebox{\columnwidth}{!}{%
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.15}
 \begin{tabular}{lcccc}
 \toprule
-\textbf{Metric} & \textbf{2 Sharers} & \textbf{3 Sharers} & \textbf{4 Sharers} & \textbf{8 Sharers} \\
+\textbf{Evaluation Metric} & \textbf{2-Sharer} & \textbf{3-Sharer} & \textbf{4-Sharer} & \textbf{8-Sharer} \\
 \midrule
 Mean Geometry Latency & 18.4\,ms & 32.1\,ms & 46.8\,ms & 94.2\,ms \\
 Area Conservation Error & $< 0.001\%$ & $< 0.002\%$ & $< 0.003\%$ & $< 0.005\%$ \\
@@ -271,7 +272,8 @@ Bisection Root Iterations & 19.4 & 21.2 & 22.8 & 24.1 \\
 Road Frontage Access Rate & 100\% & 100\% & 94.2\% & 87.5\% \\
 PDF Generation Time & 142\,ms & 158\,ms & 171\,ms & 210\,ms \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 The empirical findings confirm key architectural objectives:
