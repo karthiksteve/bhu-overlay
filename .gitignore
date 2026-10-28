@@ -47,6 +47,7 @@ static/reports/
 */static/reports/
 dist/
 *.zip
+*.mp4
 
 # Generated runtime tile caches
 static/wms_cache/*.png

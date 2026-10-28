@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhu-Overlay | 3-4 Minute Presentation & Screen Recording Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --panel-bg: #111827;
+            --accent-cyan: #00d2ff;
+            --accent-blue: #0072ff;
+            --accent-emerald: #10b981;
+            --accent-terracotta: #e06c53;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Header Bar */
+        header {
+            height: 56px;
+            background: rgba(17, 24, 39, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-badge {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #000;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #050b14;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-record {
+            background: #ef4444;
+            color: #fff;
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Main Presentation Canvas */
+        main {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            overflow: hidden;
+        }
+
+        #slide-image {
+            max-width: 100%;
+            max-height: calc(100vh - 210px);
+            object-fit: contain;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border-radius: 6px;
+        }
+
+        /* Lower Third Teleprompter & Caption Bar */
+        .teleprompter-bar {
+            height: 140px;
+            background: rgba(10, 14, 23, 0.95);
+            border-top: 2px solid var(--accent-cyan);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1rem 2rem 0.5rem 2rem;
+            backdrop-filter: blur(12px);
+            z-index: 90;
+        }
+
+        .caption-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .scene-part-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .timer-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .scene-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 0.2rem;
+        }
+
+        .speech-box {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 0 4px 4px 0;
+            margin-top: 0.35rem;
+            max-height: 48px;
+            overflow-y: auto;
+        }
+
+        /* Timeline Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            transition: width 0.2s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo-group">
+            <span class="logo-badge">BHU-OVERLAY</span>
+            <span class="logo-title">Presentation & Screen Recording Suite</span>
+        </div>
+        <div class="controls-group">
+            <button class="btn btn-secondary" id="btn-prev"><i class="fa fa-step-backward"></i> Prev</button>
+            <button class="btn btn-primary" id="btn-play-pause"><i class="fa fa-play" id="play-icon"></i> Play Demo</button>
+            <button class="btn btn-secondary" id="btn-next">Next <i class="fa fa-step-forward"></i></button>
+            <button class="btn btn-secondary" id="btn-fullscreen"><i class="fa fa-expand"></i> Fullscreen</button>
+            <button class="btn btn-record" id="btn-record"><i class="fa fa-circle"></i> Record Audio + Video</button>
+        </div>
+    </header>
+
+    <!-- Slide Presentation Canvas -->
+    <main>
+        <img id="slide-image" src="bhu_01_dashboard_initial.png" alt="Bhu-Overlay Screen">
+    </main>
+
+    <!-- Progress Tracker -->
+    <div class="progress-container" id="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- Lower-Third Teleprompter -->
+    <div class="teleprompter-bar">
+        <div class="caption-header">
+            <span class="scene-part-tag" id="scene-part">PART 1: PLATFORM OVERVIEW & MOTIVATION</span>
+            <span class="timer-badge" id="scene-timer">00:00 / 03:45</span>
+        </div>
+        <div class="scene-title" id="scene-title">Bhu-Overlay: AI-Augmented Cadastral GIS Platform</div>
+        <div class="speech-box" id="speech-box">
+            "Hello everyone. Welcome to the demonstration of Bhu-Overlay—an AI-augmented cadastral GIS and statutory land partition engine engineered for modern rural land administration..."
+        </div>
+    </div>
+
+    <script>
+        const scenes = [
+            {
+                img: "bhu_01_dashboard_initial.png",
+                duration: 28,
+                part: "PART 1: PLATFORM OVERVIEW & MOTIVATION",
+                title: "Bhu-Overlay: AI-Augmented Cadastral GIS Platform",
+                speech: "Hello everyone. Welcome to the demonstration of Bhu-Overlay—an AI-augmented cadastral GIS and statutory land partition engine engineered for rural land administration. In India, manual chain surveys cause endless inheritance disputes and landlocked plots. Bhu-Overlay automates this end-to-end with mathematical precision."
+            },
+            {
+                img: "system_architecture.jpg",
+                duration: 34,
+                part: "PART 2: SYSTEM ARCHITECTURE & DATA PIPELINE",
+                title: "Modular Multi-Tier End-to-End Architecture",
+                speech: "Here is our four-tier system architecture: Client OpenLayers interface, BhuNaksha WMS reverse proxy, offline SQLite spatial database, deterministic Shapely computational geometry, and Google Gemini statutory AI legal compliance layer."
+            },
+            {
+                img: "bhu_10_location_dropdowns_cascaded.png",
+                duration: 22,
+                part: "PART 3: ADMINISTRATIVE LOCATION CASCADING",
+                title: "7-Tier Cascading Administrative Hierarchy",
+                speech: "The left sidebar provides a 7-tier cascading selector: District Arwal, Sub-Division Arwal, Circle Kaler, Mouza Agnoor, Cadastral Survey, Map 1, Sheet 1. Selecting these instantly loads the official government vector cadastral sheet directly over satellite imagery."
+            },
+            {
+                img: "bhu_02_parcel_selected_vector_map.png",
+                duration: 26,
+                part: "PART 4: PARCEL DEMARCATION & BOUNDARY INSPECTION",
+                title: "Plot 1623: 43 Boundary Nodes & Dynamic Edge Lengths",
+                speech: "Clicking on Plot 1623 triggers immediate reverse geocoding and vector extraction. All 43 boundary nodes are rendered, and the platform dynamically computes and displays the exact length of each edge in meters (e.g., 27.3m, 14.8m) directly on the map."
+            },
+            {
+                img: "bhu_03_sidebar_measurements.png",
+                duration: 20,
+                part: "PART 5: REAL-TIME PARCEL METRICS & TOPOLOGY REPAIR",
+                title: "Survey Measurements: 8,624.5 m² (2.131 Acres)",
+                speech: "In the sidebar, comprehensive survey measurements are displayed: total area of 8,624.5 sq meters (2.131 acres) and perimeter of 485.2 meters. Zero-width buffer operations automatically repair any legacy polygon boundary self-intersections."
+            },
+            {
+                img: "bhu_04_kurra_subdivided_2shares.png",
+                duration: 28,
+                part: "PART 6: DETERMINISTIC KURRA EQUAL PARTITION (2-WAY)",
+                title: "Sub-20ms Bisection: Plot 1 (50.0%) & Plot 2 (50.0%)",
+                speech: "Now executing statutory Kurra division: Selecting Equal Share for 2 co-sharers computes optimal transverse bisection in under 20ms. Plot 1 in terracotta (4,312.13 m²) and Plot 2 in emerald (4,312.40 m²) achieve area conservation error under 0.001% and Polsby-Popper compactness score > 0.68."
+            },
+            {
+                img: "bhu_05_kurra_ai_explanation_panel.png",
+                duration: 26,
+                part: "PART 7: STATUTORY LLM ADVISORY REASONING",
+                title: "Google Gemini Legal Reasoning Under Revenue Code",
+                speech: "Candidate partition strategies are submitted to Google Gemini alongside codified statutory rules: Revenue Code Section 116 for co-tenancy rights, Section 117 preventing fragmentation, and Rule 109 guaranteeing public road access and compactness."
+            },
+            {
+                img: "bhu_06_kurra_3shares_custom.png",
+                duration: 24,
+                part: "PART 8: CUSTOM MULTI-SHARER ALLOCATION (50% / 25% / 25%)",
+                title: "Asymmetric Co-Tenancy Slicing & Micro-Assets",
+                speech: "The platform seamlessly accommodates custom multi-sharer splits—such as 50%, 25%, and 25%. Each party retains contiguous sub-parcel bounds and unhindered road corridor access, while farm trees and borewells are protected from monopolization."
+            },
+            {
+                img: "bhu_11_kurra_pdf_modal_viewer.png",
+                duration: 24,
+                part: "PART 9: OFFICIAL VECTOR PDF REPORT GENERATION",
+                title: "Native Vector Kurra Survey Report Modal Viewer",
+                speech: "The approved partition plan is automatically exported into an official Vector PDF Kurra Survey Report, featuring native vector parcel geometry, co-sharer allotment tables, and Revenue Code decree text ready for formal court filing."
+            },
+            {
+                img: "report_kurra_pdf_page1.png",
+                duration: 20,
+                part: "PART 10: STATUTORY SURVEY DECREE & DATA EXPORTS",
+                title: "Official Cadastral Partition Document & GIS Exports",
+                speech: "Here is the final tamper-evident Kurra survey document. Surveyors can also export live GeoJSON boundaries and CSV coordinates. Bhu-Overlay turns an opaque, manual process into a transparent, mathematically verifiable system. Thank you!"
+            }
+        ];
+
+        let currentIdx = 0;
+        let isPlaying = false;
+        let timerInterval = null;
+        let elapsedTotalSeconds = 0;
+        const totalDuration = scenes.reduce((a, b) => a + b.duration, 0);
+
+        function updateSlide(idx) {
+            currentIdx = idx;
+            const s = scenes[currentIdx];
+            const imgEl = document.getElementById("slide-image");
+            imgEl.style.opacity = 0;
+            setTimeout(() => {
+                imgEl.src = s.img;
+                imgEl.style.opacity = 1;
+            }, 200);
+
+            document.getElementById("scene-part").innerText = s.part;
+            document.getElementById("scene-title").innerText = s.title;
+            document.getElementById("speech-box").innerText = s.speech;
+        }
+
+        function updateTimerDisplay() {
+            const curM = Math.floor(elapsedTotalSeconds / 60);
+            const curS = elapsedTotalSeconds % 60;
+            const totM = Math.floor(totalDuration / 60);
+            const totS = totalDuration % 60;
+            const pad = (n) => n.toString().padStart(2, '0');
+            document.getElementById("scene-timer").innerText = `${pad(curM)}:${pad(curS)} / ${pad(totM)}:${pad(totS)}`;
+
+            const pct = (elapsedTotalSeconds / totalDuration) * 100;
+            document.getElementById("progress-fill").style.width = `${pct}%`;
+        }
+
+        function playPresentation() {
+            if (isPlaying) {
+                clearInterval(timerInterval);
+                isPlaying = false;
+                document.getElementById("play-icon").className = "fa fa-play";
+                document.getElementById("btn-play-pause").innerHTML = '<i class="fa fa-play"></i> Play Demo';
+                return;
+            }
+
+            isPlaying = true;
+            document.getElementById("play-icon").className = "fa fa-pause";
+            document.getElementById("btn-play-pause").innerHTML = '<i class="fa fa-pause"></i> Pause Demo';
+
+            let sceneElapsed = 0;
+
+            timerInterval = setInterval(() => {
+                elapsedTotalSeconds++;
+                sceneElapsed++;
+                updateTimerDisplay();
+
+                if (sceneElapsed >= scenes[currentIdx].duration) {
+                    sceneElapsed = 0;
+                    if (currentIdx < scenes.length - 1) {
+                        updateSlide(currentIdx + 1);
+                    } else {
+                        clearInterval(timerInterval);
+                        isPlaying = false;
+                        document.getElementById("btn-play-pause").innerHTML = '<i class="fa fa-redo"></i> Restart Demo';
+                    }
+                }
+            }, 1000);
+        }
+
+        document.getElementById("btn-play-pause").addEventListener("click", playPresentation);
+        document.getElementById("btn-prev").addEventListener("click", () => {
+            if (currentIdx > 0) updateSlide(currentIdx - 1);
+        });
+        document.getElementById("btn-next").addEventListener("click", () => {
+            if (currentIdx < scenes.length - 1) updateSlide(currentIdx + 1);
+        });
+
+        document.getElementById("btn-fullscreen").addEventListener("click", () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Built-in Browser Screen & Mic Recorder
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        const recordBtn = document.getElementById("btn-record");
+
+        recordBtn.addEventListener("click", async () => {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                recordBtn.innerHTML = '<i class="fa fa-circle"></i> Record Audio + Video';
+                recordBtn.classList.add("btn-record");
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { frameRate: 30, width: 1920, height: 1080 }
+                });
+
+                // Optional audio capture
+                try {
+                    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const audioTrack = audioStream.getAudioTracks()[0];
+                    stream.addTrack(audioTrack);
+                } catch(e) {
+                    console.log("No mic captured, recording screen only:", e);
+                }
+
+                recordedChunks = [];
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) recordedChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "Bhu_Overlay_Presentation_Recording.webm";
+                    a.click();
+                };
+
+                mediaRecorder.start();
+                recordBtn.innerHTML = '<i class="fa fa-stop"></i> Stop Recording';
+                recordBtn.classList.remove("btn-record");
+                recordBtn.style.background = "#eab308";
+
+                // Auto-start presentation
+                if (!isPlaying) playPresentation();
+
+            } catch (err) {
+                alert("Recording cancelled or unsupported. You can also use Windows Game Bar (Win + Alt + R).");
+            }
+        });
+
+        // Initialize
+        updateSlide(0);
+        updateTimerDisplay();
+    </script>
+</body>
+</html>
