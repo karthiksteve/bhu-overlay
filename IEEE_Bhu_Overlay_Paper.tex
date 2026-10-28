@@ -11,6 +11,7 @@
 \usepackage{multirow}
 \usepackage{url}
 \usepackage{microtype}
+\graphicspath{{./}{docs/screenshots/}}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -22,14 +23,14 @@
 \author{\IEEEauthorblockN{Karthikeyan A}
 \IEEEauthorblockA{\textit{School of Computer Science and Engineering} \\
 \textit{Vellore Institute of Technology}\\
-Vellore, Tamil Nadu, India \\
+Chennai, Tamil Nadu, India \\
 karthikeyan.a2023@vitstudent.ac.in}
 \and
 \IEEEauthorblockN{Vishal B}
 \IEEEauthorblockA{\textit{School of Computer Science and Engineering} \\
 \textit{Vellore Institute of Technology}\\
-Vellore, Tamil Nadu, India \\
-vishal.b2023@vitstudent.ac.in}
+Chennai, Tamil Nadu, India \\
+vishal.2023a@vitstudent.ac.in}
 }
 
 \maketitle
@@ -80,14 +81,14 @@ Recent work demonstrates that prompt-engineered LLMs with structured outputs can
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.98\textwidth]{docs/screenshots/bhu_01_dashboard_initial.png}
-\caption{Architectural overview and runtime user interface of the Bhu-Overlay platform. The interface combines an interactive OpenLayers v6 GIS canvas with ArcGIS World Imagery, an administrative 7-tier cascading hierarchy selector (District, Sub-Division, Circle, Mouza, Survey, Map, Sheet), an opacity-controlled BhuNaksha cadastral tile overlay, real-time parcel metric analytics, and the interactive Kurra subdivision suite.}
-\label{fig:dashboard_overview}
+\includegraphics[width=0.98\textwidth]{system_architecture.jpg}
+\caption{Comprehensive end-to-end system architecture of the Bhu-Overlay platform, illustrating data exchange between external cadastral and GIS services (Bihar BhuNaksha, ArcGIS, Satellite Imagery), the Flask REST backend and SQLite spatial cache, the deterministic Shapely/PyProj geospatial processing pipeline, and the Google Gemini AI statutory decision support engine.}
+\label{fig:system_architecture}
 \end{figure*}
 
 \section{System Architecture and Data Pipeline}
 
-The overall architecture of Bhu-Overlay is structured into a lightweight, modular three-tier pipeline: client-side spatial presentation, backend routing and proxy orchestration, and computational geometry coupled with statutory reasoning. Fig.~\ref{fig:dashboard_overview} displays the production web dashboard.
+The overall architecture of Bhu-Overlay is structured into a modular multi-tier pipeline: client-side spatial presentation, backend routing and proxy orchestration, deterministic computational geometry, and statutory AI reasoning. Fig.~\ref{fig:system_architecture} illustrates the end-to-end architectural workflow and component interactions.
 
 \subsection{Client-Side Spatial Interface}
 The client is implemented as a single-page web dashboard using OpenLayers v6 and Vanilla CSS. The map engine maintains five synchronized spatial layers:
@@ -168,7 +169,7 @@ Because $A(\mathcal{P}(t))$ is monotonically non-decreasing over the bounding in
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{docs/screenshots/bhu_02_parcel_selected_vector_map.png}
+\includegraphics[width=\columnwidth]{bhu_02_parcel_selected_vector_map.png}
 \caption{Cadastral parcel inspection on Plot 1623. The platform computes real-time boundary polygon geometry from cached SQLite coordinates, overlays node markers at all 43 boundary vertices, and dynamically computes and displays side lengths (e.g., 27.3\,m, 14.8\,m, 18.2\,m) on the satellite canvas.}
 \label{fig:parcel_inspection}
 \end{figure}
@@ -193,14 +194,14 @@ Candidate partition strategies are quantitatively profiled across three objectiv
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{docs/screenshots/bhu_04_kurra_subdivided_2shares.png}
+\includegraphics[width=\columnwidth]{bhu_04_kurra_subdivided_2shares.png}
 \caption{AI-assisted Kurra land subdivision of Plot 1623 into two equal co-sharer parcels (Plot 1 in terracotta, Plot 2 in emerald green). The deterministic cut achieves exact area balance while the Gemini advisory agent validates compliance with statutory compactness standards.}
 \label{fig:kurra_2shares}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\columnwidth]{docs/screenshots/bhu_06_kurra_3shares_custom.png}
+\includegraphics[width=\columnwidth]{bhu_06_kurra_3shares_custom.png}
 \caption{Arbitrary multi-sharer land partition executing a custom ratio allocation ($50\%, 25\%, 25\%$) on Plot 1623. Each sub-parcel is assigned distinct topological coordinates, calculated areas, and independent metric profiles.}
 \label{fig:kurra_3shares}
 \end{figure}
@@ -228,7 +229,7 @@ The final approved subdivision plan is compiled into an official PDF document vi
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\columnwidth, height=5.2cm, keepaspectratio]{docs/screenshots/report_kurra_pdf_page1.png}
+\includegraphics[width=0.82\columnwidth, height=5.2cm, keepaspectratio]{report_kurra_pdf_page1.png}
 \caption{Official Cadastral Partition (Kurra) PDF report generated automatically by the platform for Plot 1623. The report renders native vector parcel geometry, co-sharer area allocations, per-sub-plot metrics, and the statutory Revenue Code compliance decree.}
 \label{fig:pdf_report}
 \end{figure}
@@ -311,7 +312,7 @@ This research designed, deployed, and validated \textbf{Bhu-Overlay}, an AI-augm
 Future work will expand the platform toward: (i) incorporating 3D DEM slope rasters for soil-fertility-adjusted partition valuation; (ii) integrating mobile RTK-GPS sensor inputs via WebSockets for real-time field boundary pegging; and (iii) deploying regional language audio-visual interfaces (Hindi, Bhojpuri, and Maithili) to empower non-literate rural landowners during co-tenancy arbitration.
 
 \section*{Acknowledgment}
-The authors acknowledge the open cadastral data initiatives supported under the Digital India Land Records Modernization Programme (DILRMP) and thank the School of Computer Science and Engineering, Vellore Institute of Technology, for providing research facilities.
+The authors acknowledge the open cadastral data initiatives supported under the Digital India Land Records Modernization Programme (DILRMP) and thank the School of Computer Science and Engineering, Vellore Institute of Technology, Chennai, for providing research facilities.
 
 \begin{thebibliography}{18}
 
